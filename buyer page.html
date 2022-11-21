@@ -5,8 +5,8 @@
 <title>buyyer page</title>
 <script>
 
-function subscript(uid, product_id, price){
-    let UID=document.getElementById(uid).value;
+function subscript(uid, product_id, price){  // 下標：傳入使用者ID、商品ID、下標金額
+    let UID=document.getElementById(uid).value;   // 從html文件使用ID對應得到內容值
     let PID=document.getElementById(product_id).value;
     let PRICE=document.getElementById(price).value;
     let mydat = new FormData();
@@ -16,7 +16,7 @@ function subscript(uid, product_id, price){
     mydat.append( "price", PRICE);
     mydat.append( "o", action);
     url="control.py";
-    fetch(url,{
+    fetch(url,{    // 傳入 controller
         method: 'POST', // or 'GET'
         body: mydat
     })
@@ -30,7 +30,7 @@ function subscript(uid, product_id, price){
         let p="<p>下標狀態：";
         p += data;
         p += "</p>"
-        let div=document.getElementById('changeState');
+        let div=document.getElementById('changeState');    // 由文件顯示下標狀態
         div.innerHTML=p;
         updateProductList() ;
     })
@@ -47,7 +47,7 @@ function subscript(uid, product_id, price){
 商品下標價錢: <input type='text' id='pprice' name='pprice'>&nbsp;&nbsp;<input type='button' value='確認下標商品' onclick="subscript('puid','pid','pprice')">
 <br><hr>
 <hr>
-<div class='myCSS' id='changeState'></div>
+<div class='myCSS' id='changeState'></div>   // 顯示下標狀態
 </body>
 </html>
 
