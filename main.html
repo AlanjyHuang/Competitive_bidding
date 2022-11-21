@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>listProduct</title>
+<title>seller page</title>
 <script>
 loadList() //  <!-- 一進來網頁的時候就刷新一下目前的商品頁面 ->
 function loadList() {
@@ -25,19 +25,21 @@ function loadList() {
         console.log(dat,list);
         let p="";
         for (item of list) {
-            p += "<p>商品編號：";
-            p += item.id;
-            p += "  商品名稱：";
+            p += "<p>歷史商品編號：";
+            p += item.product_id;
+            p += "  歷史商品名稱：";
             p += item.name;
-            p += "  商品底價：";
+            p += "  歷史商品底價：";
             p += item.firstPrice;
-            p += "  商品最新價格：";
+            p += "  歷史最新價格：";
             p += item.nowPrice;
-            p += "  商品截止時間：";
+            p += "  歷史截止時間：";
+            p += item.deadline;
+            p += "  得標者：";
             p += item.deadline;
             p += "</p>";
         }
-        let div=document.getElementById('guestbook');
+        let div=document.getElementById('ss');
         div.innerHTML=p;
     })
 }
@@ -74,6 +76,7 @@ function insert(newName,newFirstPrice,newDeadline){
 </script>
 </head>
 <body>
+<div class='myCSS' id='ss'></div>
 <p>&nbsp;新增競標商品</p>
 &nbsp;&nbsp;
 商品名稱: <input type='text' id='newName' name='newName'>
