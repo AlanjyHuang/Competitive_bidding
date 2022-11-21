@@ -22,33 +22,27 @@ para=()
 #we can start accessing DB now
 
 if act=='getProductList': #get one record by xid
-	jsonStr=form.getvalue('dat')
-	dat=json.loads(jsonStr)
 	msgList = msgModel.getList() #get an array from model
 	result = {
-		"dat": dat,
 		"list": msgList
 	}
 	print(json.dumps(result,ensure_ascii=True)) #dump json string to client
 elif act=='subscript':
-	jsonStr=form.getvalue('dat')
-	dat=json.loads(jsonStr)
+	jsonStr=form.getvalue('body')
 	ret=msgModel(jsonStr['uid'],jsonStr['product_uid'],jsonStr['price'])
 	if ret:
 		print("success to subscript")
 	else:
 		print("the subscript time has pass, fail to subscript")
 elif act=="subscriptHistory":
-	jsonStr=form.getvalue('dat')
+	jsonStr=form.getvalue('body')
 	dat=json.loads(jsonStr)
 	msgList = msgModel.subscriptHistory(jsonStr['uid']) 
 	result = {
-		"dat": dat,
 		"list": msgList
 	}
 	print(json.dumps(result,ensure_ascii=True)) #dump json string to client
 elif act=="addProductInList":
-	jsonStr=form.getvalue('dat')
-	dat=json.loads(jsonStr)
-	msgModel.addProductInList(dat["name"],dat ["pFirstPrice"],dat["deadline"])
-	print(dat["name"],"success add ")
+	jsonStr=form.getvalue('body')
+	msgModel.addProductInList(jsonStr["name"],jsonStr ["firstPrice"],jsonStr["deadline"])
+	print(jsonStr["name"],"success add ")
