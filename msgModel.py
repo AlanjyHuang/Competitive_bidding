@@ -25,10 +25,19 @@ def getList():  # 取得商品屬性
 
 
 def subscript(uid, product_id, price):  # 下標
-    sql = "insert into 下標 (UID, product_id, price) values (%s, %s, %s)"
-    cur.execute(sql, (uid, product_id, price))
-    conn.commit()
-    return True
+    checkSql = "select nowPrice from 上架 where id = %s"
+    cur.execute(checkSql, ([product_id]))
+    checkPrice = cur.fetchall()
+    if (price < checkPrice[0]):
+        return False
+    else:
+        sql = "insert into 下標 (UID, product_id, price) values (%s, %s, %s)"
+        cur.execute(sql, (uid, product_id, price))
+        conn.commit()
+        updateNowPriceSql = "update 上架 set nowPrice = %s where id = %s"
+        cur.execute(updateNowPriceSql, (price, product_id))
+        conn.commit()
+        return True
 
 
 def subscriptHistory(uid):
@@ -42,10 +51,17 @@ def subscriptHistory(uid):
         temp = {
             'id': id,
             'product_id': product_id,
-			'price': price,
-			'time': time,
-			'success': 成功
+            'price': price,
+            'time': time,
+            'success': 成功
         }
         ret.append(temp)
 
     return ret
+
+
+def addProduct(name, firstPrice, deadline):
+    sql = "insert into 上架 (name, firstPrice, deadline, nowPrice) values (%s, %s, %s, %s, %s)"
+    cur.execute(sql, (name, firstPrice, deadline, firstPrice))
+    conn.commit()
+    return True

@@ -46,5 +46,5 @@ elif act=="addProductInList":
 	name=form.getvalue('name')
 	firstPrice=form.getvalue('firstPrice')
 	deadline=form.getvalue('deadline')
-	data = msgModel.addProductInList(name,firstPrice,deadline)
+	data = msgModel.addProduct(name,firstPrice,deadline)
 	print(data)
