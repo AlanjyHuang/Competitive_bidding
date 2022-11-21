@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>buyyer page</title>
+<script>
+
+function subscript(uid, product_id, price){
+    let UID=document.getElementById(uid).value;
+    let PID=document.getElementById(product_id).value;
+    let PRICE=document.getElementById(price).value;
+    let mydat = new FormData();
+    action='subscript';
+    mydat.append( "uid", UID);
+    mydat.append( "product_id", PID);
+    mydat.append( "price", PRICE);
+    mydat.append( "o", action);
+    url="control.py";
+    fetch(url,{
+        method: 'POST', // or 'GET'
+        body: mydat
+    })
+    .then(function(res){
+        console.log(res);
+        return res.text();
+    })
+    .then(function(data){
+        console.log("有跑進下標")
+        console.log(data);
+        let p="<p>下標狀態：";
+        p += data;
+        p += "</p>"
+        let div=document.getElementById('changeState');
+        div.innerHTML=p;
+        updateProductList() ;
+    })
+}
+</script>
+</head>
+<body>
+<p>&nbsp;下標競標商品</p>
+&nbsp;&nbsp;
+顧客ID: <input type='text' id='puid' name='puid'>
+&nbsp;&nbsp;
+商品標號: <input type='text' id='pid' name='pid'>
+&nbsp;&nbsp;
+商品下標價錢: <input type='text' id='pprice' name='pprice'>&nbsp;&nbsp;<input type='button' value='確認下標商品' onclick="subscript('puid','pid','pprice')">
+<br><hr>
+<hr>
+<div class='myCSS' id='changeState'></div>
+</body>
+</html>
+
