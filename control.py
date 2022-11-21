@@ -47,3 +47,8 @@ elif act=="subscriptHistory":
 		"list": msgList
 	}
 	print(json.dumps(result,ensure_ascii=True)) #dump json string to client
+elif act=="addProductInList":
+	jsonStr=form.getvalue('dat')
+	dat=json.loads(jsonStr)
+	msgModel.addProductInList(dat["name"],dat ["pFirstPrice"],dat["deadline"])
+	print(dat["name"],"success add ")
