@@ -29,7 +29,7 @@ if act=='getProductList': #get one record by xid
 	print(json.dumps(result,ensure_ascii=True)) #dump json string to client
 elif act=='subscript':
 	jsonStr=form.getvalue('body')
-	ret=msgModel(jsonStr['uid'],jsonStr['product_uid'],jsonStr['price'])
+	ret=msgModel.subscript(jsonStr['uid'],jsonStr['product_uid'],jsonStr['price'])
 	if ret:
 		print("success to subscript")
 	else:
