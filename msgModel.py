@@ -66,7 +66,7 @@ def subscriptHistory(uid): # 取得下標歷史
 
 
 def addProduct(name, firstPrice, deadline): # 上架商品
-    sql = "insert into 上架 (name, firstPrice, deadline, nowPrice) values %s, %s, %s, %s)"
+    sql = "insert into 上架 (name, firstPrice, deadline, nowPrice) values (%s, %s, %s, %s)"
     cur.execute(sql, (name, firstPrice, deadline, firstPrice))
     conn.commit()
     return True
