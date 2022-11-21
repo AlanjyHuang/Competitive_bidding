@@ -1,32 +1,34 @@
-#!C:\Users\HappyUser\AppData\Local\Programs\Python\Python38\python.exe
-#-*- coding: utf-8 -*-
-#連線DB
 from dbConfig import conn, cur
 
-def getList():
+def getList(): # 取得商品屬性
 	#查詢
-	sql="select id, title,msg, nickname,likes from guestbook order by likes desc;"
+	sql="select id, name, firstPrice, deadline, nowPrice from 上架 order by id;"
 	cur.execute(sql)
 	
 	records = cur.fetchall()
 	#return records
 	ret=[]
 	
-	for (id,title, msg, nick, likes) in records:
+	for (id, name, firstPrice, deadline, nowPrice) in records:
 		temp={
 			'id': id,
-			'title': title,
-			'likes': likes
+			'name': name,
+			'firstPrice': firstPrice,
+			'deadline': deadline,
+			'nowPrice': nowPrice
 		}
 		#print(temp)
 		ret.append(temp)
 		
 	return ret
 	
-def like(id):
-	global cur,conn
-	sql="update guestbook set likes=likes+1 where id=%s;"
-	cur.execute(sql,(id,))
+def subscript(uid, product_id, price): #下標
+	sql = "insert into 下標 (UID, pruduct_id, price) values (%s, %s, %s)"
+	cur.execute(sql, (uid, product_id, price))
 	conn.commit()
-	return 123
+	return True
 
+def subscriptHistory(uid):
+	sql = "select id, product_id, price, time, 成功 from 下標 where UID = %s"
+	cur.execute(sql, ([uid]))
+	records = cur.fetchall()
