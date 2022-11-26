@@ -4,27 +4,6 @@
 from dbConfig import conn, cur
 
 
-def get_history():  # 取得所有商品屬性
-    # 查詢
-    sql = "select id, UID, Price, time, 成功, product_id from 上架 order by id;"
-    cur.execute(sql)
-
-    records = cur.fetchall()
-    # return records
-    ret = []
-
-    for (id, name, firstPrice, deadline, nowPrice) in records:
-        temp = {
-            'product_id': id,
-            'name': name,
-            'firstPrice': firstPrice,
-          ##  'deadline': deadline,
-            'nowPrice': nowPrice
-        }
-        #print(temp)
-        ret.append(temp)
-    return ret
-
 def getList():  # 取得所有商品屬性
     # 查詢
     sql = "select id, name, firstPrice, deadline, nowPrice from 上架 order by id;"
