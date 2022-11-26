@@ -1,53 +1,112 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>buyyer page</title>
-<script>
+    <head>
+        <style>
+            table,
+            th,
+            td {
+                border: 1px solid black;
+            }
+            tr:nth-child(even) {
+                background-color: #eeedd6;
+            }
+        </style>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>buyyer page</title>
+        <script>
+            loadList() //  <!-- 一進來網頁的時候就刷新一下目前的商品頁面 ->
+            function loadList() {
+                // <!-- 讀取拍賣品歷史紀錄 ->
+                console.log('loadlist')
+                let action = 'getProductList'
+                let mydat = new FormData() //<!-- 創一個form ->
+                mydat.append('o', action)
 
-function subscript(uid, product_id, price){  // 下標：傳入使用者ID、商品ID、下標金額
-    let UID=document.getElementById(uid).value;   // 從html文件使用ID對應得到內容值
-    let PID=document.getElementById(product_id).value;
-    let PRICE=document.getElementById(price).value;
-    let mydat = new FormData();
-    action='subscript';
-    mydat.append( "uid", UID);
-    mydat.append( "product_id", PID);
-    mydat.append( "price", PRICE);
-    mydat.append( "o", action);
-    url="control.py";
-    fetch(url,{    // 傳入 controller
-        method: 'POST', // or 'GET'
-        body: mydat
-    })
-    .then(function(res){
-        console.log(res);
-        return res.text();
-    })
-    .then(function(data){
-        console.log("有跑進下標")
-        console.log(data);
-        let p="<p>下標狀態：";
-        p += data;
-        p += "</p>"
-        let div=document.getElementById('changeState');    // 由文件顯示下標狀態
-        div.innerHTML=p;
-        updateProductList() ;
-    })
-}
-</script>
-</head>
-<body>
-<p>&nbsp;下標競標商品</p>
-&nbsp;&nbsp;
-顧客ID: <input type='text' id='puid' name='puid'>
-&nbsp;&nbsp;
-商品標號: <input type='text' id='pid' name='pid'>
-&nbsp;&nbsp;
-商品下標價錢: <input type='text' id='pprice' name='pprice'>&nbsp;&nbsp;<input type='button' value='確認下標商品' onclick="subscript('puid','pid','pprice')">
-<br><hr>
-<hr>
-<div class='myCSS' id='changeState'></div>   // 顯示下標狀態
-</body>
+                fetch('control.py', {
+                    //<!-- 將資料帶入control.py ->
+                    method: 'POST', // or 'GET'
+                    body: mydat,
+                })
+                    .then(function (res) {
+                        //<!-- 等待control回傳json ->
+                        // return res.text();
+                        //console.log(res)
+                        return res.json()
+                    })
+                    .then(function (data) {
+                        //<!-- 列出拍賣場歷史紀錄 ->
+                        console.log(data)
+                        list = data['list'] //the [] indexed format
+                        console.log(list)
+                        let p =
+                            '<tr><th>商品ID</th><th>商品名稱</th><th>底價</th><th>最新價格</th><th>結束時間</th></tr>'
+                        for (item of list) {
+                            p += '<tr>'
+                            p += '<td>'
+                            p += item.product_id
+                            p += '</td><td>'
+                            p += item.name
+                            p += '</td><td>'
+                            p += item.firstPrice
+                            p += '</td><td>'
+                            p += item.nowPrice
+                            p += '</td><td>'
+                            p += item.deadline
+                            p += '</td>'
+                            p += '</tr>'
+                        }
+                        let div = document.getElementById('ss')
+                        div.innerHTML = p
+                    })
+            }
+            function subscript(uid, product_id, price) {
+                // 下標：傳入使用者ID、商品ID、下標金額
+                let UID = document.getElementById(uid).value // 從html文件使用ID對應得到內容值
+                let PID = document.getElementById(product_id).value
+                let PRICE = document.getElementById(price).value
+                let mydat = new FormData()
+                action = 'subscript'
+                mydat.append('uid', UID)
+                mydat.append('product_id', PID)
+                mydat.append('price', PRICE)
+                mydat.append('o', action)
+                url = 'control.py'
+                fetch(url, {
+                    // 傳入 controller
+                    method: 'POST', // or 'GET'
+                    body: mydat,
+                })
+                    .then(function (res) {
+                        console.log(res)
+                        return res.text()
+                    })
+                    .then(function (data) {
+                        console.log('有跑進下標')
+                        console.log(data)
+                        let p = '<p>下標狀態：'
+                        p += data
+                        p += '</p>'
+                        let div = document.getElementById('changeState') // 由文件顯示下標狀態
+                        div.innerHTML = p
+                        updateProductList()
+                    })
+            }
+        </script>
+    </head>
+    <body>
+        <p>&nbsp;下標競標商品</p>
+        &nbsp;&nbsp; 顧客ID: <input type="text" id="puid" name="puid" /> &nbsp;&nbsp; 商品標號:
+        <input type="text" id="pid" name="pid" /> &nbsp;&nbsp; 商品下標價錢:
+        <input type="text" id="pprice" name="pprice" />&nbsp;&nbsp;<input
+            type="button"
+            value="確認下標商品"
+            onclick="subscript('puid','pid','pprice')"
+        />
+        <br />
+        <hr />
+        <hr />
+        <div class="myCSS" id="changeState"></div>
+        <h2>可競標商品</h2>
+        <table class="myCSS" id="ss"></table>
+    </body>
 </html>
-

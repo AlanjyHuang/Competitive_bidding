@@ -1,4 +1,4 @@
-#!C:\Users\HappyUser\AppData\Local\Programs\Python\Python38\python.exe
+#!C:\Users\Alanjy_Huang\AppData\Local\Programs\Python\Python38-32\python.exe
 #-*- coding: utf-8 -*-
 
 #print headers first
@@ -23,9 +23,11 @@ para=()
 
 if act=='getProductList': #get one record by xid
 	msgList = msgModel.getList() #get an array from model
+	#print("getProductlist")
 	result = {
 		"list": msgList
 	}
+	#print(result)
 	print(json.dumps(result,ensure_ascii=True)) #dump json string to client
 elif act=='subscript':
 	uid=form.getvalue('uid')
@@ -40,9 +42,10 @@ elif act=="subscriptHistory":
 	jsonStr=form.getvalue('body')
 	dat=json.loads(jsonStr)
 	msgList = msgModel.subscriptHistory(jsonStr['uid']) 
-	result = {
-		"list": msgList
-	}
+	if msgList:
+		result = {
+			"list": msgList
+		}
 	print(json.dumps(result,ensure_ascii=True)) #dump json string to client
 elif act=="addProductInList":
 	name=form.getvalue('name')
