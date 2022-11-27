@@ -31,9 +31,12 @@ def subscript(uid, product_id, price):  # 下標
     checkSql = "select nowPrice from 上架 where id = %s"
     cur.execute(checkSql, ([product_id]))
     checkPrice = cur.fetchall()
-    if (price < checkPrice[0]):
+    #print(checkPrice[0][0])
+    if (int(price) < int(checkPrice[0][0])):
+        #print("fail subscript")
         return False
     else:
+      #  print("success subscript")
         sql = "insert into 下標 (UID, product_id, price) values (%s, %s, %s)"
         cur.execute(sql, (uid, product_id, price))
         conn.commit()
@@ -46,6 +49,7 @@ def subscript(uid, product_id, price):  # 下標
 
 def subscriptHistory(uid): # 取得下標歷史
     sql = "select id, product_id, price, time, 成功 from 下標 where UID = %s"
+    
     cur.execute(sql, ([uid]))
     records = cur.fetchall()
 
@@ -56,7 +60,7 @@ def subscriptHistory(uid): # 取得下標歷史
             'id': id,
             'product_id': product_id,
             'price': price,
-            'time': time,
+           # 'time': time,
             'success': 成功
         }
         ret.append(temp)

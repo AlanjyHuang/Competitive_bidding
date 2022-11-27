@@ -33,19 +33,23 @@ elif act=='subscript':
 	uid=form.getvalue('uid')
 	product_id=form.getvalue('product_id')
 	price=form.getvalue('price')
+	#print(uid,product_id,price)
 	ret=msgModel.subscript(uid,product_id,price)
+	#print("ret:",ret)
 	if ret:
 		print("success to subscript")
 	else:
 		print("the subscript time has pass, fail to subscript")
-elif act=="subscriptHistory":
-	jsonStr=form.getvalue('body')
-	dat=json.loads(jsonStr)
-	msgList = msgModel.subscriptHistory(jsonStr['uid']) 
-	if msgList:
-		result = {
+elif act=="getHistory":
+#	print("in control")
+	jsonStr=form.getvalue('UID')
+#	print(jsonStr)
+	msgList = msgModel.subscriptHistory(jsonStr) 
+	#print(msgList)
+	result = {
 			"list": msgList
 		}
+	#print(result)
 	print(json.dumps(result,ensure_ascii=True)) #dump json string to client
 elif act=="addProductInList":
 	name=form.getvalue('name')

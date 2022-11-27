@@ -103,6 +103,52 @@
                         div.innerHTML = p
                     })
             }
+            function loadHistory() {
+                // <!-- 讀取拍賣品歷史紀錄 ->
+                console.log('loadHistory')
+                let action = 'getHistory'
+                let mydat = new FormData() //<!-- 創一個form ->
+                mydat.append('o', action)
+                let UID = document.getElementById('puid').value
+                mydat.append('UID', UID)
+                console.log('puid', UID)
+                fetch('control.py', {
+                    //<!-- 將資料帶入control.py ->
+                    method: 'POST', // or 'GET'
+                    body: mydat,
+                })
+                    .then(function (res) {
+                        //<!-- 等待control回傳json ->
+                        // return res.text();
+                        //console.log(res.text())
+                        return res.json()
+                    })
+                    .then(function (data) {
+                        //<!-- 列出拍賣場歷史紀錄 ->
+                        console.log(data)
+                        list = data['list'] //the [] indexed format
+                        console.log(list)
+                        let p =
+                            '<tr><th>歷史商品ID</th><th>商品名稱</th><th>底價</th><th>最新價格</th><th>時間</th></tr>'
+                        for (item of list) {
+                            p += '<tr>'
+                            p += '<td>'
+                            p += item.id
+                            p += '</td><td>'
+                            p += item.price
+                            p += '</td><td>'
+                            p += item.product_id
+                            p += '</td><td>'
+                            p += item.success
+                            p += '</td><td>'
+                            p += item.deadline
+                            p += '</td>'
+                            p += '</tr>'
+                        }
+                        let div = document.getElementById('history')
+                        div.innerHTML = p
+                    })
+            }
             function subscript(uid, product_id, price) {
                 // 下標：傳入使用者ID、商品ID、下標金額
                 let UID = document.getElementById(uid).value // 從html文件使用ID對應得到內容值
@@ -121,7 +167,7 @@
                     body: mydat,
                 })
                     .then(function (res) {
-                        console.log(res)
+                        //console.log(res.text())
                         return res.text()
                     })
                     .then(function (data) {
@@ -132,7 +178,7 @@
                         p += '</p>'
                         let div = document.getElementById('changeState') // 由文件顯示下標狀態
                         div.innerHTML = p
-                        updateProductList()
+                        // updateProductList()
                     })
             }
         </script>
@@ -153,6 +199,8 @@
         <h2>可競標商品</h2>
         <table class="myCSS" id="ss"></table>
         <h2>下標紀錄競標商品</h2>
+
         <table class="myCSS" id="history"></table>
+        <input type="button" value="查看下標者紀錄" onclick="loadHistory()" />
     </body>
 </html>
