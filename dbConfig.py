@@ -1,4 +1,4 @@
-#!C:\Users\Alanjy_Huang\AppData\Local\Programs\Python\Python38-32\python.exe
+#!C:\Users\HappyUser\AppData\Local\Programs\Python\Python38\python.exe
 #-*- coding: utf-8 -*-
 
 #import mariadb
@@ -11,7 +11,7 @@ try:
 		password="",
 		host="127.0.0.1",
 		port=3306,
-		database="1211"
+		database="competitive_bidding"
 	)
 except: #mariadb.Error as e:
 	print("Error connecting to DB")

@@ -1,5 +1,5 @@
-#!C:\Users\Alanjy_Huang\AppData\Local\Programs\Python\Python38-32\python.exe
-#-*- coding: utf-8 -*-
+#!C:\Users\HappyUser\AppData\Local\Programs\Python\Python38\python.exe
+# -*- coding: utf-8 -*-
 
 #print headers first
 print("Content-Type: text/html; charset=utf-8\n")
@@ -45,7 +45,7 @@ elif act=="getHistory":
 	jsonStr=form.getvalue('UID')
 #	print(jsonStr)
 	msgList = msgModel.subscriptHistory(jsonStr) 
-	#print(msgList)
+	# print(msgList)
 	result = {
 			"list": msgList
 		}

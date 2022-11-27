@@ -1,4 +1,4 @@
-#!C:\Users\Alanjy_Huang\AppData\Local\Programs\Python\Python38-32\python.exe
+#!C:\Users\HappyUser\AppData\Local\Programs\Python\Python38\python.exe
 # -*- coding: utf-8 -*-
 # 連線DB
 from dbConfig import conn, cur
@@ -18,7 +18,7 @@ def getList():  # 取得所有商品屬性
             'product_id': id,
             'name': name,
             'firstPrice': firstPrice,
-          ##  'deadline': deadline,
+            'deadline': deadline.strftime('%Y-%m-%d %H:%M:%S'),
             'nowPrice': nowPrice
         }
         #print(temp)
@@ -60,7 +60,7 @@ def subscriptHistory(uid): # 取得下標歷史
             'id': id,
             'product_id': product_id,
             'price': price,
-           # 'time': time,
+            'time': time.strftime('%Y-%m-%d %H:%M:%S'),
             'success': 成功
         }
         ret.append(temp)
