@@ -83,11 +83,58 @@ function insert(newName,newFirstPrice,newDeadline){ //<!-- 上架新拍賣品 ->
         loadHistory() ;// 將新拍賣品顯示在網頁上
     })
 }
+function addProductInList() {
+                // 下標：傳入使用者ID、商品ID、下標金額
+                console.log("下標")
+                let UID = document.getElementById("name").value // 從html文件使用ID對應得到內容值
+                let PID = document.getElementById("firstPrice").value
+                let PRICE = document.getElementById("deadline").value
+                let mydat = new FormData()
+                action = 'addProductInList'
+                mydat.append('name', UID)
+                mydat.append('firstPrice', PID)
+                mydat.append('deadline', PRICE)
+                mydat.append('o', action)
+                url = 'control.py'
+                fetch(url, {
+                    // 傳入 controller
+                    method: 'POST', // or 'GET'
+                    body: mydat,
+                })
+                    .then(function (res) {
+                        //console.log(res.text())
+                        return res.text()
+                    })
+                    .then(function (data) {
+                        console.log('有跑進下標')
+                        console.log(data)
+                        let p = '<p>下標狀態：'
+                        p += data
+                        p += '</p>'
+                        let div = document.getElementById('changeState') // 由文件顯示下標狀態
+                        div.innerHTML = p
+                        // updateProductList()
+                    })
+            }
 </script>
 </head>
 <body>
+        <p>&nbsp;上架競標商品</p>
+        &nbsp;&nbsp; 商品名稱: <input type="text" id="name" name="name" /> &nbsp;&nbsp; 底標:
+        <input type="text" id="firstPrice" name="firstPrice" /> &nbsp;&nbsp; 截標時間:
+        <input type="text" id="deadline" name="deadline" />&nbsp;&nbsp;<input
+            type="button"
+            value="上架"
+            onclick=" addProductInList()"
+        />
+        <br />
+        <hr />
+                <div class="myCSS" id="changeState"></div>
+        <hr />
 <p>&nbsp;競標歷史資料</p> 
 <table class='myCSS' id='ss'></table>
+<input type="button" value="刷新" onclick="loadHistory()" />
+     
 <!-- 新增商品之ui畫面 ->
 &nbsp;&nbsp;
 商品名稱: <input type='text' id='newName' name='newName'>
