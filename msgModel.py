@@ -1,7 +1,32 @@
-#!C:\Users\Alanjy_Huang\AppData\Local\Programs\Python\Python38-32\python.exe
+#!C:\Users\HappyUser\AppData\Local\Programs\Python\Python38\python.exe
 # -*- coding: utf-8 -*-
 # 連線DB
 from dbConfig import conn, cur
+
+def subscriptFinishHistory():
+    # 查詢已結標商品
+   # print("in getList")
+    sql = "select id, name, firstPrice, deadline, nowPrice, getMan from `上架` where deadline < now() order by id;"
+    cur.execute(sql)
+
+    records = cur.fetchall()
+    # return records
+    ret = []
+   # print(records)
+    for (id, name, firstPrice, deadline, nowPrice, getMan) in records:
+       # print(deadline.strftime('%Y-%m-%d %H:%M:%S'))
+        temp = {
+            'product_id': id,
+            'name': name,
+            'firstPrice': firstPrice,
+            'deadline': deadline.strftime('%Y-%m-%d %H:%M:%S'),
+            'nowPrice': nowPrice,
+            'getMan': getMan
+        }
+       # print(temp)
+        ret.append(temp)
+    return ret
+
 
 def getHistory(product_id2):  # 取得所有商品屬性
     # 查詢
@@ -29,7 +54,7 @@ def getHistory(product_id2):  # 取得所有商品屬性
 def getList():  # 取得所有商品屬性
     # 查詢
    # print("in getList")
-    sql = "select id, name, firstPrice, deadline, nowPrice, getMan  from 上架 where curtime() < deadline order by id;"
+    sql = "select id, name, firstPrice, deadline, nowPrice from 上架 where curtime() < deadline order by id;"
     cur.execute(sql)
 
     records = cur.fetchall()
@@ -102,6 +127,3 @@ def addProduct(name, firstPrice, deadline): # 上架商品
     cur.execute(sql, (name, firstPrice, deadline, firstPrice))
     conn.commit()
     return True
-
-def checkTime():
-    sql = "SELECT * FROM ’上架‘ WHERE"

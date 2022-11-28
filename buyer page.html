@@ -15,6 +15,7 @@
         <title>buyyer page</title>
         <script>
             loadList() //  <!-- 一進來網頁的時候就刷新一下目前的商品頁面 ->
+            loadFinish()
             function loadList() {
                 // <!-- 讀取拍賣品歷史紀錄 ->
                 // console.log('loadlist2')
@@ -137,6 +138,54 @@
                         // updateProductList()
                     })
             }
+            function loadFinish() {
+                // <!-- 讀取拍賣品歷史紀錄 ->
+                // console.log('loadlist2')
+                console.log('loadFinish')
+                let action = 'loadFinish'
+                let mydat = new FormData() //<!-- 創一個form ->
+                mydat.append('o', action)
+
+                fetch('control.py', {
+                    //<!-- 將資料帶入control.py ->
+                    method: 'POST', // or 'GET'
+                    body: mydat,
+                })
+                    .then(function (res) {
+                        //<!-- 等待control回傳json ->
+                        // return res.text();
+                        //  console.log(res.text())
+                        return res.json()
+                    })
+                    .then(function (data) {
+                        //<!-- 列出拍賣場歷史紀錄 ->
+                        console.log("這邊是")
+                        console.log(data)
+                        list = data['list'] //the [] indexed format
+                        console.log(list)
+                        let p =
+                            '<tr><th>商品ID</th><th>商品名稱</th><th>底價</th><th>得標價格</th><th>得標者</th><th>結束時間</th></tr>'
+                        for (item of list) {
+                            p += '<tr>'
+                            p += '<td>'
+                            p += item.product_id
+                            p += '</td><td>'
+                            p += item.name
+                            p += '</td><td>'
+                            p += item.firstPrice
+                            p += '</td><td>'
+                            p += item.nowPrice
+                            p += '</td><td>'
+                            p += item.getMan
+                            p += '</td><td>'
+                            p += item.deadline
+                            p += '</td>'
+                            p += '</tr>'
+                        }
+                        let div = document.getElementById('finish')
+                        div.innerHTML = p
+                    })
+            }
         </script>
     </head>
     <body>
@@ -156,8 +205,9 @@
         <table class="myCSS" id="ss"></table>
         <input type="button" value="刷新" onclick="loadList()" />
         <h2>顧客下標紀錄</h2>
-
-        <table class="myCSS" id="history"></table>
+        <table class="myCSS" id="history"></table> 
+        <h2>所有已結標商品</h2>
+        <table class="myCSS" id="finish"></table> 
         <input type="button" value="查看下標者紀錄" onclick="loadHistory()" />
         <a href="main.html"> 進入後台</a>
     </body>

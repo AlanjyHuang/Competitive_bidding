@@ -1,4 +1,4 @@
-#!C:\Users\Alanjy_Huang\AppData\Local\Programs\Python\Python38-32\python.exe
+#!C:\Users\HappyUser\AppData\Local\Programs\Python\Python38\python.exe
 # -*- coding: utf-8 -*-
 
 #print headers first
@@ -51,7 +51,7 @@ elif act=='subscript':
 		print("success to subscript")
 	else:
 		print("the subscript time has pass, fail to subscript")
-elif act=="getHistoryUID":
+elif act=="getHistory":
 #	print("in control")
 	jsonStr=form.getvalue('UID')
 #	print(jsonStr)
@@ -68,3 +68,9 @@ elif act=="addProductInList":
 	deadline=form.getvalue('deadline')
 	data = msgModel.addProduct(name,firstPrice,deadline)
 	print(data)
+elif act=="loadFinish":
+	msgList = msgModel.subscriptFinishHistory()
+	result = {
+			"list": msgList
+		}
+	print(json.dumps(result,ensure_ascii=True)) #dump json string to client
