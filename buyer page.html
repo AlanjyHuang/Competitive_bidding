@@ -63,7 +63,7 @@
             function loadHistory() {
                 // <!-- 讀取拍賣品歷史紀錄 ->
                 console.log('loadHistory')
-                let action = 'getHistory'
+                let action = 'getHistoryUID'
                 let mydat = new FormData() //<!-- 創一個form ->
                 mydat.append('o', action)
                 let UID = document.getElementById('puid').value
@@ -153,7 +153,7 @@
         <h2>可競標商品</h2>
         <table class="myCSS" id="ss"></table>
         <input type="button" value="刷新" onclick="loadList()" />
-        <h2>下標紀錄</h2>
+        <h2>顧客下標紀錄</h2>
 
         <table class="myCSS" id="history"></table>
         <input type="button" value="查看下標者紀錄" onclick="loadHistory()" />

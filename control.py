@@ -50,7 +50,7 @@ elif act=='subscript':
 		print("success to subscript")
 	else:
 		print("the subscript time has pass, fail to subscript")
-elif act=="getHistory":
+elif act=="getHistoryUID":
 #	print("in control")
 	jsonStr=form.getvalue('UID')
 #	print(jsonStr)
