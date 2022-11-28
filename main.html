@@ -14,10 +14,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>seller page</title>
 <script>
-loadList() //  <!-- 一進來網頁的時候就刷新一下目前的商品頁面 ->
-function loadList() {// <!-- 讀取拍賣品歷史紀錄 ->
-    console.log("loadlist")
-    let action='getProductList'; 
+loadHistory() //  <!-- 一進來網頁的時候就刷新一下目前的商品頁面 ->
+function loadHistory() {// <!-- 讀取拍賣品歷史紀錄 ->
+    console.log("loadHistory")
+    let action='getHistory'; 
     let mydat = new FormData();//<!-- 創一個form ->
     mydat.append( "o", action);
 
@@ -34,19 +34,17 @@ function loadList() {// <!-- 讀取拍賣品歷史紀錄 ->
         console.log(data)
         list=data["list"]; //the [] indexed format
         console.log(list);
-        let p="<tr><th>歷史商品ID</th><th>商品名稱</th><th>底價</th><th>最新價格</th><th>時間</th></tr>";
+        let p="<tr><th>商品ID</th><th>買家UID</th><th>下標價</th><th>時間</th></tr>";
         for (item of list) {
             p += "<tr>";
             p += "<td>";
             p += item.product_id;
             p += "</td><td>";
-            p += item.name;
+            p += item.UID;
             p += "</td><td>";
-            p += item.firstPrice;
+            p += item.price;
             p += "</td><td>";
-            p += item.nowPrice;
-            p += "</td><td>";
-            p += item.deadline;
+            p += item.time;
             p += "</td>";
             p += "</tr>";
         }
@@ -82,7 +80,7 @@ function insert(newName,newFirstPrice,newDeadline){ //<!-- 上架新拍賣品 ->
         p += "</p>"
         let div=document.getElementById('changeState');
         div.innerHTML=p;
-        loadList() ;// 將新拍賣品顯示在網頁上
+        loadHistory() ;// 將新拍賣品顯示在網頁上
     })
 }
 </script>

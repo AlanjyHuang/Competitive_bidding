@@ -1,19 +1,42 @@
-#!C:\Users\HappyUser\AppData\Local\Programs\Python\Python38\python.exe
+#!C:\Users\Alanjy_Huang\AppData\Local\Programs\Python\Python38-32\python.exe
 # -*- coding: utf-8 -*-
 # 連線DB
 from dbConfig import conn, cur
 
+def getHistory():  # 取得所有商品屬性
+    # 查詢
+   # print("in getList")
+    sql = "select product_id, UID, price, time from 下標 order by product_id;"
+    cur.execute(sql)
+
+    records = cur.fetchall()
+    # return records
+    ret = []
+   # print(records)
+    for (product_id, UID, price, time) in records:
+       # print(deadline.strftime('%Y-%m-%d %H:%M:%S'))
+        temp = {
+            'product_id': product_id,
+            'UID': UID,
+            'price': price,
+            'time': time.strftime('%Y-%m-%d %H:%M:%S'),
+        }
+       # print(temp)
+        ret.append(temp)
+    return ret
 
 def getList():  # 取得所有商品屬性
     # 查詢
+   # print("in getList")
     sql = "select id, name, firstPrice, deadline, nowPrice from 上架 order by id;"
     cur.execute(sql)
 
     records = cur.fetchall()
     # return records
     ret = []
-
+   # print(records)
     for (id, name, firstPrice, deadline, nowPrice) in records:
+       # print(deadline.strftime('%Y-%m-%d %H:%M:%S'))
         temp = {
             'product_id': id,
             'name': name,
@@ -21,7 +44,7 @@ def getList():  # 取得所有商品屬性
             'deadline': deadline.strftime('%Y-%m-%d %H:%M:%S'),
             'nowPrice': nowPrice
         }
-        #print(temp)
+       # print(temp)
         ret.append(temp)
     return ret
 

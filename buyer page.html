@@ -17,7 +17,8 @@
             loadList() //  <!-- 一進來網頁的時候就刷新一下目前的商品頁面 ->
             function loadList() {
                 // <!-- 讀取拍賣品歷史紀錄 ->
-                console.log('loadlist')
+                // console.log('loadlist2')
+                console.log('loadlist1')
                 let action = 'getProductList'
                 let mydat = new FormData() //<!-- 創一個form ->
                 mydat.append('o', action)
@@ -30,51 +31,7 @@
                     .then(function (res) {
                         //<!-- 等待control回傳json ->
                         // return res.text();
-                        //console.log(res)
-                        return res.json()
-                    })
-                    .then(function (data) {
-                        //<!-- 列出拍賣場歷史紀錄 ->
-                        console.log(data)
-                        list = data['list'] //the [] indexed format
-                        console.log(list)
-                        let p =
-                            '<tr><th>商品ID</th><th>商品名稱</th><th>底價</th><th>最新價格</th><th>結束時間</th></tr>'
-                        for (item of list) {
-                            p += '<tr>'
-                            p += '<td>'
-                            p += item.product_id
-                            p += '</td><td>'
-                            p += item.name
-                            p += '</td><td>'
-                            p += item.firstPrice
-                            p += '</td><td>'
-                            p += item.nowPrice
-                            p += '</td><td>'
-                            p += item.deadline
-                            p += '</td>'
-                            p += '</tr>'
-                        }
-                        let div = document.getElementById('ss')
-                        div.innerHTML = p
-                    })
-            }
-            function loadList() {
-                // <!-- 讀取拍賣品歷史紀錄 ->
-                console.log('loadlist')
-                let action = 'getProductList'
-                let mydat = new FormData() //<!-- 創一個form ->
-                mydat.append('o', action)
-
-                fetch('control.py', {
-                    //<!-- 將資料帶入control.py ->
-                    method: 'POST', // or 'GET'
-                    body: mydat,
-                })
-                    .then(function (res) {
-                        //<!-- 等待control回傳json ->
-                        // return res.text();
-                        //console.log(res)
+                        //  console.log(res.text())
                         return res.json()
                     })
                     .then(function (data) {
@@ -128,18 +85,15 @@
                         console.log(data)
                         list = data['list'] //the [] indexed format
                         console.log(list)
-                        let p =
-                            '<tr><th>歷史商品ID</th><th>商品名稱</th><th>底價</th><th>最新價格</th><th>時間</th></tr>'
+                        let p = '<tr><th>下標者ID</th><th>商品ID</th><th>下標價格</th><th>下標時間</th></tr>'
                         for (item of list) {
                             p += '<tr>'
                             p += '<td>'
-                            p += item.id
-                            p += '</td><td>'
-                            p += item.price
+                            p += UID
                             p += '</td><td>'
                             p += item.product_id
                             p += '</td><td>'
-                            p += item.success
+                            p += item.price
                             p += '</td><td>'
                             p += item.time
                             p += '</td>'
