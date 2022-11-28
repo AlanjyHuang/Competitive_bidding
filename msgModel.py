@@ -1,4 +1,4 @@
-#!C:\Users\HappyUser\AppData\Local\Programs\Python\Python38\python.exe
+#!C:\Users\Alanjy_Huang\AppData\Local\Programs\Python\Python38-32\python.exe
 # -*- coding: utf-8 -*-
 # 連線DB
 from dbConfig import conn, cur

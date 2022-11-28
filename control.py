@@ -1,4 +1,4 @@
-#!C:\Users\HappyUser\AppData\Local\Programs\Python\Python38\python.exe
+#!C:\Users\Alanjy_Huang\AppData\Local\Programs\Python\Python38-32\python.exe
 # -*- coding: utf-8 -*-
 
 #print headers first
@@ -51,7 +51,7 @@ elif act=='subscript':
 		print("success to subscript")
 	else:
 		print("the subscript time has pass, fail to subscript")
-elif act=="getHistory":
+elif act=="getHistoryUID":
 #	print("in control")
 	jsonStr=form.getvalue('UID')
 #	print(jsonStr)
