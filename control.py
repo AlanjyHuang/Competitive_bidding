@@ -32,8 +32,9 @@ if act=='getProductList': #get one record by xid
 	print(json.dumps(result,ensure_ascii=True)) #dump json string to client
 elif act=='getHistory': #get one record by xid
 	#print("getProductlist")
-	msgList = msgModel.getHistory() #get an array from model
-	#print(msgList)
+	product_id=form.getvalue('product_id')
+	msgList = msgModel.getHistory(product_id) #get an array from model
+	#print("msglist:",msgList)
 	result = {
 		"list": msgList
 	}

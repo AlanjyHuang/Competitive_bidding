@@ -3,16 +3,16 @@
 # 連線DB
 from dbConfig import conn, cur
 
-def getHistory():  # 取得所有商品屬性
+def getHistory(product_id2):  # 取得所有商品屬性
     # 查詢
-   # print("in getList")
-    sql = "select product_id, UID, price, time from 下標 order by product_id;"
-    cur.execute(sql)
-
+    #print("pid",product_id2)
+    #print("in getList")
+    sql = "select product_id, UID, price, time from 下標 where product_id=%s order by time;"
+    cur.execute(sql,([product_id2]))
     records = cur.fetchall()
     # return records
     ret = []
-   # print(records)
+  #  print(records)
     for (product_id, UID, price, time) in records:
        # print(deadline.strftime('%Y-%m-%d %H:%M:%S'))
         temp = {
@@ -23,26 +23,29 @@ def getHistory():  # 取得所有商品屬性
         }
        # print(temp)
         ret.append(temp)
+    #print(ret)
     return ret
 
 def getList():  # 取得所有商品屬性
     # 查詢
    # print("in getList")
-    sql = "select id, name, firstPrice, deadline, nowPrice from 上架 where curtime() < deadline order by id;"
+    sql = "select id, name, firstPrice, deadline, nowPrice, getMan  from 上架 where curtime() < deadline order by id;"
     cur.execute(sql)
 
     records = cur.fetchall()
     # return records
     ret = []
    # print(records)
-    for (id, name, firstPrice, deadline, nowPrice) in records:
+    for (id, name, firstPrice, deadline, nowPrice,getMan ) in records:
        # print(deadline.strftime('%Y-%m-%d %H:%M:%S'))
         temp = {
             'product_id': id,
             'name': name,
             'firstPrice': firstPrice,
             'deadline': deadline.strftime('%Y-%m-%d %H:%M:%S'),
-            'nowPrice': nowPrice
+            'nowPrice': nowPrice,
+            'getMan':getMan 
+
         }
        # print(temp)
         ret.append(temp)
@@ -66,6 +69,9 @@ def subscript(uid, product_id, price):  # 下標
 		# 更新最高價
         updateNowPriceSql = "update 上架 set nowPrice = %s where id = %s"
         cur.execute(updateNowPriceSql, (price, product_id))
+        conn.commit()
+        updateNowPriceSql = "update 上架 set getMan = %s where id = %s"
+        cur.execute(updateNowPriceSql, (uid, product_id))
         conn.commit()
         return True
 
