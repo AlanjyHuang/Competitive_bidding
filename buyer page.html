@@ -23,7 +23,6 @@
                 let action = 'getProductList'
                 let mydat = new FormData() //<!-- 創一個form ->
                 mydat.append('o', action)
-
                 fetch('control.py', {
                     //<!-- 將資料帶入control.py ->
                     method: 'POST', // or 'GET'
@@ -80,7 +79,7 @@
                     .then(function (res) {
                         //<!-- 等待control回傳json ->
                         // return res.text();
-                        console.log(res.text())
+                        // console.log(res.text())
                         return res.json()
                     })
                     .then(function (data) {
@@ -159,7 +158,7 @@
                     })
                     .then(function (data) {
                         //<!-- 列出拍賣場歷史紀錄 ->
-                        console.log("這邊是")
+                        console.log('這邊是')
                         console.log(data)
                         list = data['list'] //the [] indexed format
                         console.log(list)
@@ -204,10 +203,11 @@
         <h2>可競標商品</h2>
         <table class="myCSS" id="ss"></table>
         <input type="button" value="刷新" onclick="loadList()" />
-        <h2>顧客下標紀錄</h2>
-        <table class="myCSS" id="history"></table> 
         <h2>所有已結標商品</h2>
-        <table class="myCSS" id="finish"></table> 
+        <table class="myCSS" id="finish"></table>
+        <h2>顧客下標紀錄</h2>
+        <table class="myCSS" id="history"></table>
+
         <input type="button" value="查看下標者紀錄" onclick="loadHistory()" />
         <a href="main.html"> 進入後台</a>
     </body>
