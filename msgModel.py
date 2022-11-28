@@ -28,7 +28,7 @@ def getHistory():  # 取得所有商品屬性
 def getList():  # 取得所有商品屬性
     # 查詢
    # print("in getList")
-    sql = "select id, name, firstPrice, deadline, nowPrice from 上架 order by id;"
+    sql = "select id, name, firstPrice, deadline, nowPrice from 上架 where curtime() < deadline order by id;"
     cur.execute(sql)
 
     records = cur.fetchall()
@@ -96,3 +96,6 @@ def addProduct(name, firstPrice, deadline): # 上架商品
     cur.execute(sql, (name, firstPrice, deadline, firstPrice))
     conn.commit()
     return True
+
+def checkTime():
+    sql = "SELECT * FROM ’上架‘ WHERE"
